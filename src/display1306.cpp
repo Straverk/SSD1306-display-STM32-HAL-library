@@ -1,19 +1,15 @@
 #include "display1306.h"
 
 
-
-/*Display1306::Display1306(I2C_HandleTypeDef i2c, uint8_t address)
-{
-  _i2c = &i2c;
-  _address = address;
-
-  init();
-}*/
 Display1306::Display1306(I2C_HandleTypeDef *i2c)
 {
   _i2c = i2c;
-
+  
   init();
+}
+Display1306::Display1306(I2C_HandleTypeDef *i2c, uint8_t address) : Display1306(i2c)
+{
+  _address = address;
 }
 
 
@@ -110,7 +106,41 @@ void Display1306::clearPixel(uint8_t x, uint8_t y)
 }
 
 
-void Display1306::drawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
+void Display1306::drawLineH(uint8_t x1, uint8_t x2, uint8_t y)
+{
+  for (uint8_t x = x1; x < x2; x++)
+  {
+    drawPixel(x, y);
+  }
+}
+void Display1306::drawLineV(uint8_t x, uint8_t y1, uint8_t y2)
+{
+  for (uint8_t y = y1; y < y2; y++)
+  {
+    drawPixel(x, y);
+  }
+}
+
+
+void Display1306::drawRectFrame(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
+{
+  drawLineH(x1, x2, y1);
+  drawLineH(x1, x2, y2);
+
+  drawLineV(x1, y1, y2);
+  drawLineV(x2, y1, y2);
+}
+void Display1306::drawRectFrameBorderOut(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t borderSize)
+{
+  for (int i = 0; i < borderSize; i++)
+    drawRectFrame(x1-i, y1-i, x2+i, y2+i);
+}
+void Display1306::drawRectFrameBorderIn(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t borderSize)
+{
+  for (int i = 0; i < borderSize; i++)
+    drawRectFrame(x1+i, y1+i, x2-i, y2-i);
+}
+void Display1306::drawRectFill(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
 {
   for (uint8_t x = x1; x < x2; x++)
   {

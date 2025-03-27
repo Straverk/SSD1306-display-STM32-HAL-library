@@ -23,6 +23,7 @@ public:
 
   //Display1306(I2C_HandleTypeDef i2c, uint8_t address);
   Display1306(I2C_HandleTypeDef *i2c);
+  Display1306(I2C_HandleTypeDef *i2c, uint8_t address);
 
   //  Core functions
   void init();
@@ -30,7 +31,13 @@ public:
   void drawPixel(uint8_t x, uint8_t y);
   void clearPixel(uint8_t x, uint8_t y);
 
-  void drawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
+  void drawLineH(uint8_t x1, uint8_t x2, uint8_t y);
+  void drawLineV(uint8_t x, uint8_t y1, uint8_t y2);
+
+  void drawRectFrame(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
+  void drawRectFrameBorderOut(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t borderSize);
+  void drawRectFrameBorderIn(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t borderSize);
+  void drawRectFill(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
   void clearRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
 
   void writeChar(unsigned char ch, uint8_t start_x, uint8_t row, const fontData font[][5]);

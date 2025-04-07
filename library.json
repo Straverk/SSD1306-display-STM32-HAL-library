@@ -1,0 +1,22 @@
+{
+  "name": "Display SSD1306",
+  "version": "0.0.2",
+  "keywords": "i2c,display,oled,ssd1306,HAL,stm32,ststm32",
+  "description": "A full-fledged C++ library for comfortable work with the SSD1306 display on the STM32F1 using the HAL framework!",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/Straverk/SSD1306-display-STM32-HAL-library/"
+  },
+  "authors":
+  [
+    {
+      "name": "Straverk",
+      "email": "straverk@ya.ru",
+      "maintainer": true
+    }
+  ],
+  "license": "MIT",
+  "frameworks": "HAL",
+  "platforms": "ststm32"
+}

@@ -162,26 +162,42 @@ void Display1306::clearRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
 }
 
 
-void Display1306::writeChar(unsigned char ch, uint8_t start_x, uint8_t row, const fontData font[][5])
+void Display1306::drawChar(const unsigned char &ch, uint8_t start_x, uint8_t row, const fontData font[][5])
 { 
   uint8_t font_width {5};
   for (int i = 0; i < font_width; i++) 
   {
-    _displayBuffer[start_x + row * WIDTH + i] = font[ch][i];
+    _displayBuffer[start_x + row * WIDTH + i] = font[(unsigned char)ch][i];
   }
 }
 
-void Display1306::writeString(string s, uint8_t start_x, uint8_t row, const fontData font[][5])
+void Display1306::drawString(const char str[], uint8_t start_x, uint8_t row, const fontData font[][5])
 { 
   uint8_t font_width_with_spaces {6};
   uint8_t chars_printed {0};
-  for (char character : s)
+  while (*str)
   { 
     if (start_x + chars_printed*font_width_with_spaces < WIDTH)
     {
-      writeChar(character, start_x + chars_printed*font_width_with_spaces, row, font);
+      drawChar((unsigned char&)(*str), start_x + chars_printed*font_width_with_spaces, row, font);
       chars_printed++;
     }
+    str++;
+  }
+}
+
+void Display1306::drawString(const unsigned char str[], uint8_t start_x, uint8_t row, const fontData font[][5])
+{ 
+  uint8_t font_width_with_spaces {6};
+  uint8_t chars_printed {0};
+  while (*str)
+  { 
+    if (start_x + chars_printed*font_width_with_spaces < WIDTH)
+    {
+      drawChar((*str), start_x + chars_printed*font_width_with_spaces, row, font);
+      chars_printed++;
+    }
+    str++;
   }
 }
 

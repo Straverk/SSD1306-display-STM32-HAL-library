@@ -40,8 +40,9 @@ public:
   void drawRectFill(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
   void clearRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
 
-  void writeChar(unsigned char ch, uint8_t start_x, uint8_t row, const fontData font[][5]);
-  void writeString(string s, uint8_t start_x, uint8_t row, const fontData font[][5]);
+  void drawChar(const unsigned char &ch, uint8_t start_x, uint8_t row, const fontData font[][5]);
+  void drawString(const char str[], uint8_t start_x, uint8_t row, const fontData font[][5]);
+  void drawString(const unsigned char str[], uint8_t start_x, uint8_t row, const fontData font[][5]);
 
   void clear();
   void update();

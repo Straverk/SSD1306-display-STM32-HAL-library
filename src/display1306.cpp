@@ -96,110 +96,6 @@ void Display1306::init()
 }
 
 
-void Display1306::drawPixel(uint8_t x, uint8_t y)
-{
-  _displayBuffer[x + (y / 8) * WIDTH] |= (1 << (y % 8));
-}
-void Display1306::clearPixel(uint8_t x, uint8_t y)
-{
-  _displayBuffer[x + (y / 8) * WIDTH] &= ~(1 << (y % 8));
-}
-
-
-void Display1306::drawLineH(uint8_t x1, uint8_t x2, uint8_t y)
-{
-  for (uint8_t x = x1; x < x2; x++)
-  {
-    drawPixel(x, y);
-  }
-}
-void Display1306::drawLineV(uint8_t x, uint8_t y1, uint8_t y2)
-{
-  for (uint8_t y = y1; y < y2; y++)
-  {
-    drawPixel(x, y);
-  }
-}
-
-
-void Display1306::drawRectFrame(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
-{
-  drawLineH(x1, x2, y1);
-  drawLineH(x1, x2, y2);
-
-  drawLineV(x1, y1, y2);
-  drawLineV(x2, y1, y2);
-}
-void Display1306::drawRectFrameBorderOut(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t borderSize)
-{
-  for (int i = 0; i < borderSize; i++)
-    drawRectFrame(x1-i, y1-i, x2+i, y2+i);
-}
-void Display1306::drawRectFrameBorderIn(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t borderSize)
-{
-  for (int i = 0; i < borderSize; i++)
-    drawRectFrame(x1+i, y1+i, x2-i, y2-i);
-}
-void Display1306::drawRectFill(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
-{
-  for (uint8_t x = x1; x < x2; x++)
-  {
-    for (uint8_t y = y1; y < y2; y++)
-    {
-      drawPixel(x, y);
-    }
-  }
-}
-void Display1306::clearRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
-{
-  for (uint8_t x = x1; x < x2; x++)
-  {
-    for (uint8_t y = y1; y < y2; y++)
-    {
-      clearPixel(x, y);
-    }
-  }
-}
-
-
-void Display1306::drawChar(const unsigned char &ch, uint8_t start_x, uint8_t row, const fontData font[][5])
-{ 
-  uint8_t font_width {5};
-  for (int i = 0; i < font_width; i++) 
-  {
-    _displayBuffer[start_x + row * WIDTH + i] = font[(unsigned char)ch][i];
-  }
-}
-
-void Display1306::drawString(const char str[], uint8_t start_x, uint8_t row, const fontData font[][5])
-{ 
-  uint8_t font_width_with_spaces {6};
-  uint8_t chars_printed {0};
-  while (*str)
-  { 
-    if (start_x + chars_printed*font_width_with_spaces < WIDTH)
-    {
-      drawChar((unsigned char&)(*str), start_x + chars_printed*font_width_with_spaces, row, font);
-      chars_printed++;
-    }
-    str++;
-  }
-}
-
-void Display1306::drawString(const unsigned char str[], uint8_t start_x, uint8_t row, const fontData font[][5])
-{ 
-  uint8_t font_width_with_spaces {6};
-  uint8_t chars_printed {0};
-  while (*str)
-  { 
-    if (start_x + chars_printed*font_width_with_spaces < WIDTH)
-    {
-      drawChar((*str), start_x + chars_printed*font_width_with_spaces, row, font);
-      chars_printed++;
-    }
-    str++;
-  }
-}
 
 void Display1306::clear()
 {
@@ -212,20 +108,6 @@ void Display1306::clear()
 void Display1306::update()
 {
   _writeData(_displayBuffer, BUFFER_SIZE);
-}
-
-
-
-
-
-void Display1306::_drawBytePixel(uint8_t x, uint8_t y)
-{
-  _displayBuffer[x + (y / 8) * WIDTH] = uint8_t(~0);
-}
-
-void Display1306::_clearBytePixel(uint8_t x, uint8_t y)
-{
-  _displayBuffer[x + (y / 8) * WIDTH] = 0x00;
 }
 
 

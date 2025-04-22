@@ -111,6 +111,15 @@ void Display1306::update()
 }
 
 
+void Display1306::drawPixel(uint8_t x, uint8_t y)
+{
+  _displayBuffer[x + (y / 8) * width] |= (1 << (y % 8));
+}
+void Display1306::clearPixel(uint8_t x, uint8_t y)
+{
+  _displayBuffer[x + (y / 8) * width] &= ~(1 << (y % 8));
+}
+
 
 uint8_t Display1306::_writeCommand(uint8_t* data, uint8_t size)
 {

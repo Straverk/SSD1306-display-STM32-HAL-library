@@ -14,14 +14,13 @@ using font_ssd1306::Font;
 #define SSD1306_I2C_CONTROL_BYTE_COMMAND    0x00
 #define SSD1306_I2C_CONTROL_BYTE_DATA       0x40
 
-
 class Display1306
 {
 public:
   static const uint8_t width = 128;
   static const uint8_t height = 64;
 
-  //Display1306(I2C_HandleTypeDef i2c, uint8_t address);
+  
   Display1306(I2C_HandleTypeDef *i2c);
   Display1306(I2C_HandleTypeDef *i2c, uint8_t address);
 
@@ -34,6 +33,9 @@ public:
   void drawLineH(uint8_t x1, uint8_t x2, uint8_t y);
   void drawLineV(uint8_t x, uint8_t y1, uint8_t y2);
   void drawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
+  void clearLineH(uint8_t x1, uint8_t x2, uint8_t y);
+  void clearLineV(uint8_t x, uint8_t y1, uint8_t y2);
+  void clearLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
 
   void drawRectFrame(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
   void drawRectFrameBorder(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t borderSize);
@@ -45,6 +47,7 @@ public:
   void drawOutlinedCircle(uint8_t x1, uint8_t y1, uint8_t r, uint8_t outline_width);
   void drawArc(uint8_t x1, uint8_t y1, uint8_t r, float start_angle, float end_angle);
   void drawArcFilled(uint8_t x1, uint8_t y1, uint8_t r, float start_angle, float end_angle);
+  void clearCircle(uint8_t x1, uint8_t y1, uint8_t r);
 
   void drawCharRow(const unsigned char &ch, uint8_t start_x, uint8_t row, Font *font);
   void drawStringRow(const unsigned char str[], uint8_t start_x, uint8_t row, Font *font);

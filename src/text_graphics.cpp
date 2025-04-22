@@ -1,5 +1,9 @@
 #include "display1306.h"
 
+#ifndef DISPLAY_CUT_ALL_GRAPHICS
+#ifndef DISPLAY_CUT_TEXT_GRAPHICS
+
+#ifndef DISPLAY_CUT_TEXT_ROW_GRAPHICS
 
 void Display1306::drawCharRow(const unsigned char &ch, uint8_t start_x, uint8_t row, Font *font)
 {
@@ -8,6 +12,8 @@ void Display1306::drawCharRow(const unsigned char &ch, uint8_t start_x, uint8_t 
     _displayBuffer[start_x + row * width + i] = font->stroke(ch, i);
   }
 }
+
+#ifndef DISPLAY_CUT_STRINGS_GRAPHICS
 
 void Display1306::drawStringRow(const unsigned char str[], uint8_t start_x, uint8_t row, Font *font)
 {
@@ -32,8 +38,12 @@ void Display1306::drawStringRow(string str, uint8_t start_x, uint8_t row, Font *
 {
   drawStringRow(str.c_str(), start_x, row, font);
 }
+#endif
+
+#endif
 
 
+#ifndef DISPLAY_CUT_TEXT_NOT_ROW_GRAPHICS
 
 void Display1306::drawChar(const unsigned char &ch, uint8_t start_x, uint8_t start_y, Font *font)
 {
@@ -45,6 +55,8 @@ void Display1306::drawChar(const unsigned char &ch, uint8_t start_x, uint8_t sta
       _displayBuffer[start_x + x + (((start_y + y) / 8) * width)] |= (stroke & (1 << y)) << start_y_bit >> (((start_y_bit + y) / 8) * 8);
   }
 }
+
+#ifndef DISPLAY_CUT_STRINGS_GRAPHICS
 
 void Display1306::drawString(const unsigned char str[], uint8_t start_x, uint8_t start_y, Font *font)
 {
@@ -69,3 +81,10 @@ void Display1306::drawString(string str, uint8_t start_x, uint8_t start_y, Font 
 {
   drawString(str.c_str(), start_x, start_y, font);
 }
+
+#endif
+
+#endif
+
+#endif
+#endif
